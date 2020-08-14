@@ -20,7 +20,8 @@ def newgame():
     ui.inputlabel = f'{game.turn} player: '
     ui.errmsg = None
     ui.btnlabel = 'Move'
-    return redirect('/play')
+    # return redirect('/play')
+    return render_template('chess.html', ui=ui)
 
 @app.route('/play')
 def play():
