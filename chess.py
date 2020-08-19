@@ -41,6 +41,12 @@ class King(BasePiece):
     def __repr__(self):
         return f'King({repr(self.colour)})'
     
+    def sym(self):
+        if self.colour == 'white':
+            return '♔'
+        elif self.colour == 'black':
+            return '♚'
+        
     def isvalid(self, start: tuple, end: tuple):
         '''King can move 1 step horizontally or vertically.'''
         x, y, dist = self.vector(start, end)
@@ -52,6 +58,12 @@ class Queen(BasePiece):
     def __repr__(self):
         return f'Queen({repr(self.colour)})'
 
+    def sym(self):
+        if self.colour == 'white':
+            return '♕'
+        elif self.colour == 'black':
+            return '♛'
+        
     def isvalid(self, start: tuple, end: tuple):
         x, y, dist = self.vector(start, end)
         if (x != 0 and y != 0 and abs(x) == abs(y)) \
@@ -67,6 +79,12 @@ class Bishop(BasePiece):
     def __repr__(self):
         return f'Bishop({repr(self.colour)})'
 
+    def sym(self):
+        if self.colour == 'white':
+            return '♗'
+        elif self.colour == 'black':
+            return '♝'
+        
     def isvalid(self, start: tuple, end: tuple):
         x, y, dist = self.vector(start, end)
         if x != 0 and y != 0 and abs(x) == abs(y):
@@ -80,6 +98,12 @@ class Knight(BasePiece):
     def __repr__(self):
         return f'Knight({repr(self.colour)})'
 
+    def sym(self):
+        if self.colour == 'white':
+            return '♘'
+        elif self.colour == 'black':
+            return '♞'
+        
     def isvalid(self, start: tuple, end: tuple):
         x, y, dist = self.vector(start, end)
         if dist == 3 and 0 < abs(x) < 3 and 0 < abs(y) < 3:
@@ -93,6 +117,12 @@ class Rook(BasePiece):
     def __repr__(self):
         return f'Rook({repr(self.colour)})'
 
+    def sym(self):
+        if self.colour == 'white':
+            return '♖'
+        elif self.colour == 'black':
+            return '♜'
+        
     def isvalid(self, start: tuple, end: tuple, **kwargs):
         x, y, dist = self.vector(start, end)
         if kwargs.get('castling', False):
@@ -119,6 +149,12 @@ class Pawn(BasePiece):
     def __repr__(self):
         return f'Pawn({repr(self.colour)})'
 
+    def sym(self):
+        if self.colour == 'white':
+            return '♙'
+        elif self.colour == 'black':
+            return '♟︎'
+        
     def isvalid(self, start: tuple, end: tuple, **kwargs):
         x, y, dist = self.vector(start, end)
         xmove = 1 if kwargs.get('capture', False) else 0
@@ -356,40 +392,28 @@ class Board:
 
     def display(self):
         '''
-        Displays the contents of the board.
+        Returns the contents of the board as a nested list.
         Each piece is represented by two letters.
         First letter is the colour (W for white, B for black).
         Second letter is the name (Starting letter for each piece).
         '''
-        if self.debug:
-            print('== DEBUG MODE ON ==')
-        # helper function to generate symbols for piece
-        def sym(piece):
-            colour_sym = piece.colour[0].upper()
-            piece_sym = piece.name[0].upper()
-            return f'{colour_sym}{piece_sym}'
-
+        table = []
         # Row 7 is at the top, so print in reverse order
-        print(' ' * 4, end='')
-        print('  '.join([f'{i:2}' for i in range(8)]), end='\n\n')
+        firstrow = [' ', '0', '1', '2', '3', '4', '5', '6', '7']
+        table.append(firstrow)
         for row in range(7, -1, -1):
-            print(f'{row:2}  ', end='')
+            newrow = [str(row)]
             for col in range(8):
-                coord = (col, row)  # tuple
-                if coord in self.coords():
-                    piece = self.get_piece(coord)
-                    print(f'{sym(piece)}', end='')
+                coord = (col, row)
+                piece = self.get_piece(coord)
+                if piece is None:
+                    newrow.append(' ')
                 else:
-                    piece = None
-                    print('  ', end='')
-                if col == 7:     # Put line break at the end
-                    print('')
-                else:            # Print two spaces between pieces
-                    print('  ', end='')
-            print(' '*15)
-            if self.checkmate is not None:
-                print(f'{self.checkmate} is checkmated!')
+                    newrow.append(piece.sym())
 
+            table.append(newrow)
+        return table
+    
     def prompt(self):
         if self.debug:
             print('== PROMPT ==')
