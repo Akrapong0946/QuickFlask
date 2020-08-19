@@ -8,11 +8,22 @@
     </head>
     <body>
         <!-- Modify this section START -->
-        <p>[Placeholder for chess board]</p>
+        <!-- Modify table (e.g. colour to make a checkered board) -->
+        <table>
+        {% for row in ui.board %}
+            <tr>
+            {% for cell in row %}
+                <td>{{ cell }}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </table>
 
-        <label>{{ ui.inputlabel }}</label>
-        <input type="text" name="player_input" value="">
-        <input type="submit" value="{{ ui.btnlabel }}">
+        <form action="/play" method="post">
+            <label>{{ ui.inputlabel }}</label>
+            <input type="text" name="player_input" value="">
+            <input type="submit" value="{{ ui.btnlabel }}">
+        </form>
         
         <p>We’ll have some code here to insert error messages, if any. Stay tuned.</p>
         <!-- Modify this section END -->
