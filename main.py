@@ -36,15 +36,17 @@ def play():
     # TODO: convert player input to start & end coord
     start, end = split_and_convert(player_move)
     # TODO: Validate move, display error msg if move is invalid
+    try:
+        game.update(start, end)
+        switch = True
+    except MoveError:
+        ui.errmsg = f'Invalid move, try again.'
+        switch = False
     # TODO: Update the game object and ui object
-    # try:
-    #     game.update(start, end)
-    # except MoveError:
-    #     ui.errmsg = f'Invalid move, try again.'
-    # else:
-    #     ui.board = game.display()
-    #     game.next_turn()
-    #     return render_template('chess.html', ui=ui)
+    if switch:
+        ui.board = game.display()
+        game.next_turn()
+    return render_template('chess.html', ui=ui)
    
 
 @app.route('/promote')
