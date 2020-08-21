@@ -35,8 +35,8 @@
             font-family: 'Roboto', sans-serif;
             color: #545454;
         }
-        errmsg {
-            font-size: 12px;
+        .error {
+            font-size: 14px;
             font-family: 'Roboto', sans-serif;
             color: #545454;
         }
@@ -66,7 +66,11 @@
         </center>
         </p>    
         
-        <errmsg><center>We’ll have some code here to insert error messages, if any. Stay tuned.</center></errmsg>
+        <center>
+        {% if ui.errmsg is not none %}
+            <p class="error">{{ ui.errmsg }}</p>
+        {% endif %}
+        </center>
         <!-- Modify this section END -->
     </body>
 </html>

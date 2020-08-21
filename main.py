@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, redirect, request
-from chess import WebInterface, Board, BasePiece
+from chess import WebInterface, Board, BasePiece, MoveError
 
 def split_and_convert(inputstr):
     '''Convert 5-char inputstr into start and end tuples.'''
@@ -37,9 +37,14 @@ def play():
     start, end = split_and_convert(player_move)
     # TODO: Validate move, display error msg if move is invalid
     # TODO: Update the game object and ui object
-    game.update(start, end)
-    ui.board = game.display()
-    return render_template('chess.html', ui=ui)
+    # try:
+    #     game.update(start, end)
+    # except MoveError:
+    #     ui.errmsg = f'Invalid move, try again.'
+    # else:
+    #     ui.board = game.display()
+    #     game.next_turn()
+    #     return render_template('chess.html', ui=ui)
    
 
 @app.route('/promote')
