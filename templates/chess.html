@@ -5,27 +5,68 @@
         <!-- Change your page title -->
         <title>CHESS</title>
         <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+        <style>
+        table, tr, td {
+            border: 3px solid #545454;
+            border-collapse: collapse;
+        }
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .table_element_css {
+            font-size: 17px;
+            font-family: 'Roboto', sans-serif;
+            color: #545454;
+        }
+        input[type=text] {
+            border: 1px solid #545454;
+            border-radius: 4px;
+        }
+        label {
+            font-size: 17px;
+            font-family: 'Roboto', sans-serif;
+            color: #545454; 
+        }
+        input[type=submit] {
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+            color: #545454;
+        }
+        errmsg {
+            font-size: 12px;
+            font-family: 'Roboto', sans-serif;
+            color: #545454;
+        }
+        </style>
     </head>
-    <body>
+
+    <body style="background-color:powderblue">
         <!-- Modify this section START -->
         <!-- Modify table (e.g. colour to make a checkered board) -->
-        <table>
+        <table class="center" style="width:300px; height:300px;">
         {% for row in ui.board %}
             <tr>
             {% for cell in row %}
-                <td>{{ cell }}</td>
+                <td class="table_element_css" style="text-align:center">{{ cell }}</td>
             {% endfor %}
             </tr>
         {% endfor %}
         </table>
 
-        <form action="/play" method="post">
-            <label>{{ ui.inputlabel }}</label>
-            <input type="text" name="player_input" value="">
-            <input type="submit" value="{{ ui.btnlabel }}">
-        </form>
+        <p>
+        <center>
+            <form action="/play" method="post">
+                <label>{{ ui.inputlabel }}</label>
+                <input type="text" name="player_input" value="">
+                <input type="submit" value="{{ ui.btnlabel }}">
+            </form>
+        </center>
+        </p>    
         
-        <p>We’ll have some code here to insert error messages, if any. Stay tuned.</p>
+        <errmsg><center>We’ll have some code here to insert error messages, if any. Stay tuned.</center></errmsg>
         <!-- Modify this section END -->
     </body>
 </html>
