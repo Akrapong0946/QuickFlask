@@ -39,15 +39,17 @@ def play():
     try:
         game.update(start, end)
         switch = True
+    # Removing the error statement after a valid input
+        ui.errmsg = None
     except MoveError:
-        ui.errmsg = f'Invalid move, try again.'
+        ui.errmsg = 'Invalid move, try again.'
         switch = False
     # TODO: Update the game object and ui object
     if switch:
         ui.board = game.display()
         game.next_turn()
+
     return render_template('chess.html', ui=ui)
-   
 
 @app.route('/promote')
 def promote():
