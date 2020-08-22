@@ -48,6 +48,7 @@ def play():
     if switch:
         ui.board = game.display()
         game.next_turn()
+    ui.inputlabel = f'{game.turn} player: '
 
     return render_template('chess.html', ui=ui)
 
