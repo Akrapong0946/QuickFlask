@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, redirect, request
-from chess import WebInterface, Board, BasePiece, MoveError
+from chess import WebInterface, Board, BasePiece, MoveError, MoveHistory, Move
 
 def split_and_convert(inputstr):
     '''Convert 5-char inputstr into start and end tuples.'''
@@ -52,8 +52,10 @@ def play():
 
     return render_template('chess.html', ui=ui)
 
-@app.route('/promote')
+@app.route('/promote', methods=['POST'])
 def promote():
-    pass
+    # get player's promoted piece from POST request object
+    # promotedpiece = request.form['promotion']
+    # promotedpiece = promotedpiece.lower()[1]
 
 app.run('0.0.0.0')
