@@ -68,7 +68,16 @@
         {% for row in ui.board %}
             <tr>
             {% for cell in row %}
-                <td class="table_element_css" style="text-align:center">{{ cell }}</td>
+                {% if ui.board.index(row)%2 == loop.index0%2 and ui.board.index(row)>0 and loop.index0>0 %}
+                    <td class="table_element_css" style="text-align:center" bgcolor=#FFF2B7 >{{ cell }}</td>
+                    <!-- ^ lighter colour here ^ -->
+                {% elif ui.board.index(row)>0 and loop.index0>0 %}
+                    <td class="table_element_css" style="text-align:center" bgcolor=#A7DE8F> {{ cell }}</td>
+                    <!-- ^ darker colour here ^ -->
+                {% else %}
+                    <td class="table_element_css" style="text-align:center" bgcolor=#B0E0E6> {{ cell }}</td>
+                    <!-- ^ row and col num colour here ^ -->
+                {% endif %}
             {% endfor %}
             </tr>
         {% endfor %}
