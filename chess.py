@@ -9,8 +9,7 @@ class MoveHistory:
     def __init__(self, size):
         # Input Validation
         if type(size) != int:
-            pass
-            #return SizeError
+            return CircularStackSizeError(f'CircularStack size must be an integer. {type(size)} given.')
         else:
             self.size = size
             self.__data = [None] * size
@@ -44,6 +43,9 @@ class MoveError(Exception):
     '''Custom error for invalid moves.'''
     pass
 
+class CircularStackSizeError(Exception):
+    '''Custom error for invalid CircularStack size'''
+    pass
 
 class BasePiece:
     def __init__(self,colour):
