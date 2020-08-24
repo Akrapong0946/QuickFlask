@@ -7,11 +7,15 @@ class Move:
 class MoveHistory:
     '''MoveHistory works like a CircularStack'''
     def __init__(self, size):
-        # Remember to validate input
-        self.size = size
-        self.__data = [None] * size
-        self.head = None
-    
+        # Input Validation
+        if type(size) != int:
+            pass
+            #return SizeError
+        else:
+            self.size = size
+            self.__data = [None] * size
+            self.head = None
+        
     def push(self, move):
         if self.head is None:
             self.head = 0
