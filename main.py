@@ -4,10 +4,14 @@ from chess import WebInterface, Board, BasePiece, MoveError, MoveHistory, Move
 
 def split_and_convert(inputstr):
     '''Convert 5-char inputstr into start and end tuples.'''
-    start, end = inputstr.split(' ')
-    start = (int(start[0]), int(start[1]))
-    end = (int(end[0]), int(end[1]))
-    return (start, end)
+    if (len(inputstr) == 5) and (inputstr[2] == ' '):
+        start, end = inputstr.split(' ')
+        start = (int(start[0]), int(start[1]))
+        end = (int(end[0]), int(end[1]))
+        return (start, end)
+    else:
+        return MoveError
+
 
 app = Flask(__name__)
 ui = WebInterface()
@@ -34,14 +38,15 @@ def newgame():
 def play():
     if request.method == 'POST':
         player_move = request.form['player_input']
-        start, end = split_and_convert(player_move)
-        encapped_move = Move(start, end)
+
         # TODO: Validate move, display error msg if move is invalid
         try:
+            start, end = split_and_convert(player_move)
+            encapped_move = Move(start, end)
             game.update(encapped_move.start, encapped_move.end)
         # Removing the error statement after a valid input
             ui.errmsg = None
-        except MoveError:
+        except:
             ui.errmsg = 'Invalid move, try again.'
             return render_template('chess.html', ui=ui)
         else:
