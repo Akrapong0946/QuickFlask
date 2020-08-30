@@ -42,7 +42,8 @@ def play():
         # TODO: Validate move, display error msg if move is invalid
         try:
             start, end = split_and_convert(player_move)
-            encapped_move = Move(start, end)
+            capturedcoords = (end[0], end[1])
+            encapped_move = Move(start, end, game.get_piece(capturedcoords))
             game.update(encapped_move.start, encapped_move.end)
         # Removing the error statement after a valid input
             ui.errmsg = None
@@ -52,6 +53,7 @@ def play():
         else:
             game.next_turn()
             movehistory.push(encapped_move)
+                
     ui.board = game.display()
     ui.inputlabel = f'{game.turn} player: '
     return render_template('chess.html', ui=ui)
@@ -69,6 +71,7 @@ def undo():
     popped_move = movehistory.pop()
     # Revert the piece movement
     game.move(popped_move.end, popped_move.start)
+    game.add(popped_move.end, popped_move.capturedpiece)
     # Revert turn to previous player (same as the next player)
     game.next_turn()
     return redirect('/play')
