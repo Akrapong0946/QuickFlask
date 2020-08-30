@@ -1,8 +1,9 @@
 class Move:
     '''Player's move (start and end coordinates)'''
-    def __init__(self, start, end):
+    def __init__(self, start, end, capturedpiece):
         self.start = start
         self.end = end
+        self.capturedpiece = capturedpiece
 
 class MoveHistory:
     '''MoveHistory works like a CircularStack'''
